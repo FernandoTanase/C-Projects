@@ -1,4 +1,7 @@
 /* initial test driver for strmap implementation */
+//FINISH IMPLEMENTING THE OTHER 3 FUNCTIONS[]
+//COMMENT OUT THE FUNCTIONS[]
+//WRITE BETTER TESTS[]
 #include <stdio.h>
 #include "strmap.h"
 
@@ -23,17 +26,18 @@ int main() {
   m = strmap_create(101);
   doput(key1,(void *)1);
   doput(key2,(void *)2);
-    doput(key3,(void *)3);
-    doput(key4,(void *)4);
-    doput(key5,(void *)5);
-    doput(key6,(void *)6);
-    doput(key7,(void *)7);
-    doput(key8,(void *)8);
-    doput(key9,(void *)9);
-    doput(key7,(void *)700);
-    doput(key1,(void *)100);
-    /*strmap_dump(m);
-    strmap_remove(m,key7);
+  doput(key3,(void *)3);
+  doput(key4,(void *)4);
+  doput(key5,(void *)5);
+  doput(key6,(void *)6);
+  doput(key7,(void *)7);
+  doput(key8,(void *)8);
+  doput(key9,(void *)9);
+  doput(key7,(void *)700);
+  doput(key1,(void *)100);
+  strmap_dump(m);
+  printf("Number of elements in the map: %d\n",strmap_getsize(m));
+    /*strmap_remove(m,key7);
     strmap_remove(m,key1);
     strmap_dump(m);*/
   return 0;

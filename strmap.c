@@ -7,9 +7,9 @@
 unsigned int hash(char *key){
     int length = strlen(key);
     unsigned int hash = 0;
-    for(int i = 0; i < length; i++){
+    /*for(int i = 0; i < length; i++){
         hash = ((hash << 5) + key[i]) % MAX_BUCKETS;
-    }
+    }*/
     return hash;
 }
 
@@ -85,8 +85,35 @@ void *strmap_put(strmap_t *m, char *key, void *value) {
     return NULL;
 }
 
+void strmap_dump(strmap_t *m) {
+    printf("String Map Dump:\n");
+    printf("Number of Buckets: %d\n", m->strmap_nbuckets);
+    printf("Number of Elements: %d\n", m->strmap_size);
 
+    // Iterate through each bucket
+    for (int i = 0; i < m->strmap_nbuckets; i++) {
+        smel_t *current = m->strmap_buckets[i];
 
+        // Print bucket index
+        printf("Bucket %d:", i);
+
+        // Traverse the linked list in the current bucket
+        if (current == NULL) {
+            printf(" (empty)\n");
+        } else {
+            // Iterate through each element in the bucket
+            while (current != NULL) {
+                printf(" -> {Key: %s, Value: %p}", current->sme_key, current->sme_value);
+                current = current->sme_next;
+            }
+            printf("\n");
+        }
+    }
+}
+
+int strmap_getsize(strmap_t *m) {
+    return m->strmap_size;
+}
 
 //
 // Created by ferna on 9/8/2024.
