@@ -1,9 +1,10 @@
 /* initial test driver for strmap implementation */
-//FINISH IMPLEMENTING THE OTHER 3 FUNCTIONS[]
-//COMMENT OUT THE FUNCTIONS[]
+//FINISH IMPLEMENTING THE OTHER 3 FUNCTIONS[x]
+//COMMENT OUT THE FUNCTIONS[x]
 //WRITE BETTER TESTS[]
 #include <stdio.h>
 #include "strmap.h"
+
 
 char *key1 = "string1";
 char *key2 = "gobbledygook";
@@ -37,9 +38,12 @@ int main() {
   doput(key1,(void *)100);
   strmap_dump(m);
   printf("Number of elements in the map: %d\n",strmap_getsize(m));
-    /*strmap_remove(m,key7);
-    strmap_remove(m,key1);
-    strmap_dump(m);*/
+  strmap_remove(m,key7);
+  strmap_remove(m,key1);
+  strmap_dump(m);
+  printf("Number of elements in the map: %d\n",strmap_getsize(m));
+  printf("Value of key %s: %d\n",key2,(int)strmap_get(m,key2));
+  printf("Number of buckets in the map: %d\n", strmap_getnbuckets(m));
   return 0;
 }
     

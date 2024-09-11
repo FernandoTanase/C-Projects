@@ -86,9 +86,6 @@ void *strmap_put(strmap_t *m, char *key, void *value) {
 }
 
 void strmap_dump(strmap_t *m) {
-    printf("String Map Dump:\n");
-    printf("Number of Buckets: %d\n", m->strmap_nbuckets);
-    printf("Number of Elements: %d\n", m->strmap_size);
 
     // Iterate through each bucket
     for (int i = 0; i < m->strmap_nbuckets; i++) {
@@ -113,6 +110,70 @@ void strmap_dump(strmap_t *m) {
 
 int strmap_getsize(strmap_t *m) {
     return m->strmap_size;
+}
+
+void *strmap_remove(strmap_t *m, char *key) {
+    // Calculate the hash value and ensure it's within the bucket array bounds
+    unsigned int hash_value = hash(key) % m->strmap_nbuckets;
+
+    // Pointer to traverse the linked list in the bucket
+    smel_t *current = m->strmap_buckets[hash_value];
+    smel_t *previous = NULL;
+
+    // Traverse the list to find the key
+    while (current != NULL) {
+        if (strcmp(current->sme_key, key) == 0) {
+            // Found the key, we will remove this element
+            if (previous == NULL) {
+                // The element is at the head of the list
+                m->strmap_buckets[hash_value] = current->sme_next;
+            } else {
+                // Bypass the element in the linked list
+                previous->sme_next = current->sme_next;
+            }
+
+            // Save the value to return
+            void *value = current->sme_value;
+
+            // Free the memory allocated for the key and the element
+            free(current->sme_key);
+            free(current);
+
+            // Decrease the map size
+            m->strmap_size--;
+
+            // Return the value associated with the removed key
+            return value;
+        }
+
+        // Move to the next element in the list
+        previous = current;
+        current = current->sme_next;
+    }
+
+    // Key was not found
+    return NULL;
+}
+
+void *strmap_get(strmap_t *m, char *key) {
+    // Calculate the hash value and ensure it's within the bucket array bounds
+    unsigned int hash_value = hash(key) % m->strmap_nbuckets;
+
+    // Traverse the linked list in the appropriate bucket
+    smel_t *current = m->strmap_buckets[hash_value];
+    while (current != NULL) {
+        // Check if the current element's key matches the given key
+        if (strcmp(current->sme_key, key) == 0) {
+            return current->sme_value; // Key found, return the associated value
+        }
+        current = current->sme_next; // Move to the next element
+    }
+
+    // Key was not found
+    return NULL;
+}
+int strmap_getnbuckets(strmap_t *m){
+    return m->strmap_nbuckets;
 }
 
 //
