@@ -7,9 +7,9 @@
 unsigned int hash(char *key){
     int length = strlen(key);
     unsigned int hash = 0;
-    /*for(int i = 0; i < length; i++){
+    for(int i = 0; i < length; i++){
         hash = ((hash << 5) + key[i]) % MAX_BUCKETS;
-    }*/
+    }
     return hash;
 }
 
@@ -17,6 +17,9 @@ strmap_t *strmap_create(int numbuckets) {
     // Ensure the number of buckets is at least MIN_BUCKETS
     if (numbuckets < MIN_BUCKETS) {
         numbuckets = MIN_BUCKETS;
+    }
+    if (numbuckets > MAX_BUCKETS) {
+        numbuckets = MAX_BUCKETS;
     }
 
     // Allocate memory for the string map (strmap_t)
@@ -63,10 +66,10 @@ void *strmap_put(strmap_t *m, char *key, void *value) {
     // Key doesn't exist, create a new element
     smel_t *new_element = (smel_t *)malloc(sizeof(smel_t));
     if (new_element == NULL) {
-        return NULL; // Handle memory allocation failure
+        return NULL; // in case mealloc failure
     }
 
-    // Duplicate the key to avoid modifying the original string
+    // Duplicate the key to avoid modifying the original string(not necessary )
     new_element->sme_key = strdup(key);
     if (new_element->sme_key == NULL) {
         free(new_element); // Clean up on failure

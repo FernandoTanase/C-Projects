@@ -24,7 +24,7 @@ void doput(char *k,void *v) {
 }
 
 int main() {
-  m = strmap_create(101);
+  m = strmap_create(1);
   doput(key1,(void *)1);
   doput(key2,(void *)2);
   doput(key3,(void *)3);
@@ -36,14 +36,27 @@ int main() {
   doput(key9,(void *)9);
   doput(key7,(void *)700);
   doput(key1,(void *)100);
-  strmap_dump(m);
+  strmap_put(m,"duhmer", (void *) 69);
+  strmap_put(m,"duhmer", (void *) 420);
+  strmap_put(m,"forever21", (void *) 21);
+  strmap_put(m,"xxxtentacion", (void *) 888);
+  strmap_put(m,"jennifer", (void *) 30);
+  strmap_put(m,"shrek", (void *) 111111);
+    printf("---------------\n");
+    strmap_dump(m);
   printf("Number of elements in the map: %d\n",strmap_getsize(m));
-  strmap_remove(m,key7);
-  strmap_remove(m,key1);
+    printf("----------------\n");
+  strmap_remove(m,"jennifer");
   strmap_dump(m);
+  strmap_remove(m,"shrek");
+  strmap_dump(m);
+  strmap_remove(m,"shrek");
+  strmap_dump(m);
+  printf("Value of shrek: %d\n", (int)strmap_get(m,"shrek"));
   printf("Number of elements in the map: %d\n",strmap_getsize(m));
-  printf("Value of key %s: %d\n",key2,(int)strmap_get(m,key2));
+
   printf("Number of buckets in the map: %d\n", strmap_getnbuckets(m));
-  return 0;
+
+   return 0;
 }
     
